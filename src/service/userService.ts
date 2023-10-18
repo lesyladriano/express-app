@@ -43,4 +43,9 @@ export class UserService{
             return{message:"Not Found"}
         }
     }
+
+    async findByEmail(email: string) {
+        const users = await this.userRepository.findOne({where:{ email }})
+        return users;
+    }
 }

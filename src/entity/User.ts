@@ -9,16 +9,18 @@ export class User {
     @Column()
     firstName: string
 
-    @Column({nullable:true})
-    middleName: string |null
+    @Column()
+    middleName: string 
 
     @Column()
     lastName: string
 
     @Column()
-    pet: string
-
-    @Column()
     age: number
 
+    @Column({nullable: true})
+    email: string | null;
+
+    @Column({nullable: true})
+    password: string | null;
 }
