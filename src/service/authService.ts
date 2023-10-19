@@ -1,7 +1,7 @@
 import { Repository } from "typeorm"
 import { User } from "../entity/User"
-import * as bcrypt from "bcrypt";
-import * as jwt from 'jsonwebtoken';
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 import "dotenv/config";
 export class AuthService{
     
@@ -12,8 +12,10 @@ export class AuthService{
         const hashPassword =await bcrypt.hash(newuser.password,10);
         const user=this.userRepository.create(newuser)
         user.password=hashPassword;
+
         await this.userRepository.save(user);
         delete user.password;
+
         const accessToken = jwt.sign(
             {id: user.id, email: user.email}, 
             process.env.JWT_SECRET, 
@@ -79,6 +81,6 @@ export class AuthService{
             statusCode: 200,
             success: true,
 
-        };
+        }
     }
 }

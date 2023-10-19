@@ -8,6 +8,7 @@ export class UserController {
 
 
     static async all(request: Request, response: Response, next: NextFunction) {
+        console.log(request.user);
     const data = await userRepository.findAll(); 
     //AppDatasource.getRepository();
     return response.status(200).send(data);
