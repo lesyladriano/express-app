@@ -4,6 +4,10 @@ import cors from "cors";
 import { AppDataSource } from "./data-source";
 import userRouter from "./routes/userRouter";
 import { logger } from "./middleware/logger";
+import authRouter from "./routes/authRouter";
+
+
+
 
 AppDataSource.initialize()
     .then(async () => {
@@ -21,7 +25,9 @@ AppDataSource.initialize()
         app.use(logger);
 
         app.use("/public", userRouter);
+        app.use("/auth", authRouter);
         app.listen(3000);
         console.log("Express server has started on port 3000. Open http://localhost:3000/users to see results");
     })
     .catch(error => console.log(error));
+

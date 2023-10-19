@@ -15,12 +15,12 @@ export class User {
     @Column()
     lastName: string
 
+    @Column({ unique: true})
+    email: string;
+
     @Column()
-    age: number
+    password: string;
 
-    @Column({nullable: true})
-    email: string | null;
-
-    @Column({nullable: true})
-    password: string | null;
+    @Column({nullable:true ,select:false})
+    refreshToken: string;
 }
