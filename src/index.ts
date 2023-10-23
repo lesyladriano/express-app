@@ -5,6 +5,7 @@ import { AppDataSource } from "./data-source";
 import userRouter from "./routes/userRouter";
 import { logger } from "./middleware/logger";
 import authRouter from "./routes/authRouter";
+import cookiesParser from "cookie-parser";
 
 
 
@@ -19,6 +20,7 @@ AppDataSource.initialize()
 
         // BUILT-IN MIDDLEWARE
         app.use(express.json());
+        app.use(cookiesParser());
         app.use(express.urlencoded({ extended: true }));
 
         // CUSTOMIZED MIDDLEWARE

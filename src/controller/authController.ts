@@ -24,6 +24,63 @@ export class AuthController {
         return response.status(data.statusCode).json({
             accessToken:data.accessToken,
             refreshToken:data.refreshToken
-        });
+        }); 
+       
     }
+    static async logout(request: Request, response: Response) {
+        const refreshToken = request.cookies.jwt;
+        if (!refreshToken) {
+            return response.status(400).json({ error: "No JWT cookie found" });
+        }
+        // Attempt to clear the JWT cookie
+        response.clearCookie("jwt", { httpOnly: true });
+        return response.sendStatus(204);
+    }
+    static async changePassword(request: Request, response: Response){
+        const {  
+            currentPassword,
+            newPassword,
+            confirmPassword} = request.body;
+    
+    const email = request.user.email;
+    
+    const changePasswordData = {
+        currentPassword, 
+        newPassword, 
+        confirmPassword, 
+        email,
+    };
+
+   
+
+    const result = await authRepository.changePassword(changePasswordData);
+
+    if (!result.success){
+    return response 
+        .status(result.statusCode)
+        .json({ error: result.error});
+    }
+    return response 
+        .status(result.statusCode)
+        .json({ messsage: result.message});
+    }
+    
+    static async passwordResetEmail(request: Request, response: Response){
+        const {email}=request.body
+        const result = await authRepository.passwordResetEmail(email);
+        console.log(email)
+        console.log(result)
+        
+        if(!result.success){
+            return response
+                .status(result.statusCode)
+                .json({error:result.error})
+        }
+        return response
+                .status(result.statusCode)
+                .json({message:result.message})
+    }
+
+    
 }
+

@@ -23,4 +23,10 @@ export class User {
 
     @Column({nullable:true ,select:false})
     refreshToken: string;
+
+    @Column({nullable:true })
+    passwordResetToken: string;
+
+    @Column({nullable:true, type: 'timestamp with time zone'})
+    passwordResetExpires: Date;
 }
